@@ -1,98 +1,191 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Website Template Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+BuildAI 多租户独立站模板系统的后端 API。
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 技术栈
 
-## Description
+- **框架**: NestJS 11.x
+- **数据库**: PostgreSQL + TypeORM
+- **多租户**: 行级安全策略 (RLS)
+- **文档**: Swagger/OpenAPI
+- **AI集成**: OpenAI API (可配置)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 项目结构
 
-## Project setup
-
-```bash
-$ npm install
+```
+src/
+├── database/
+│   ├── entities/          # 数据库实体
+│   ├── migrations/        # 数据库迁移
+│   ├── data-source.ts     # TypeORM 数据源配置
+│   └── database.module.ts # 数据库模块
+├── common/
+│   ├── middleware/        # 中间件
+│   └── tenant-context/    # 多租户上下文
+├── modules/
+│   ├── tenants/          # 租户管理
+│   ├── themes/           # 主题管理
+│   ├── contents/         # 内容管理 (多租户)
+│   ├── products/         # 产品管理 (多租户)
+│   ├── pages/            # 页面管理 (多租户)
+│   ├── media/            # 媒体管理 (多租户)
+│   └── ai/               # AI 接口
+├── app.module.ts
+└── main.ts
 ```
 
-## Compile and run the project
+## 快速开始
+
+### 1. 安装依赖
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Run tests
+### 2. 配置环境变量
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+cp .env.example .env
+# 编辑 .env 文件配置数据库连接
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 3. 创建数据库
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+# 使用 PostgreSQL 创建数据库
+createdb website_template
+
+# 运行初始迁移
+psql -d website_template -f src/database/migrations/001_initial_schema.sql
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 4. 启动开发服务器
 
-## Resources
+```bash
+npm run start:dev
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+## API 文档
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+启动后访问: http://localhost:3000/api/docs
 
-## Support
+## 多租户实现
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### 1. 租户识别
 
-## Stay in touch
+- **Header**: `X-Tenant-ID: <tenant_id>`
+- **Subdomain**: `tenant.example.com`
+- **Custom Domain**: `tenant.com`
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### 2. 数据库隔离 (RLS)
+
+```sql
+-- 启用行级安全
+ALTER TABLE products ENABLE ROW LEVEL SECURITY;
+
+-- 创建隔离策略
+CREATE POLICY tenant_products_isolation ON products
+    USING (tenant_id = current_setting('app.current_tenant')::UUID);
+```
+
+## API 端点
+
+### 租户管理 (Admin)
+
+```
+POST   /api/v1/admin/tenants              # 创建租户
+GET    /api/v1/admin/tenants              # 租户列表
+GET    /api/v1/admin/tenants/:id          # 租户详情
+PUT    /api/v1/admin/tenants/:id          # 更新租户
+POST   /api/v1/admin/tenants/:id/deploy   # 部署租户站点
+```
+
+### 主题管理
+
+```
+GET    /api/v1/themes                     # 可用主题列表
+POST   /api/v1/admin/themes               # 创建主题
+GET    /api/v1/admin/themes/:id/config    # 主题配置
+```
+
+### 内容管理
+
+```
+GET    /api/v1/contents?key=xxx           # 获取内容 (自动识别租户)
+POST   /api/v1/admin/contents             # 创建内容
+PUT    /api/v1/admin/contents/:id         # 更新内容
+```
+
+### 产品管理
+
+```
+GET    /api/v1/products                   # 产品列表
+GET    /api/v1/products/:id               # 产品详情
+POST   /api/v1/admin/products             # 创建产品
+PUT    /api/v1/admin/products/:id         # 更新产品
+DELETE /api/v1/admin/products/:id         # 删除产品
+GET    /api/v1/product-categories         # 分类列表
+GET    /api/v1/product-tags               # 标签列表
+```
+
+### 页面管理
+
+```
+GET    /api/v1/pages                      # 页面列表
+GET    /api/v1/pages/:slug                # 页面详情
+GET    /api/v1/pages/homepage             # 获取首页
+POST   /api/v1/admin/pages                # 创建页面
+PUT    /api/v1/admin/pages/:id            # 更新页面
+DELETE /api/v1/admin/pages/:id            # 删除页面
+```
+
+### AI 接口
+
+```
+POST   /api/v1/ai/content/generate        # 生成内容
+POST   /api/v1/ai/products/description    # 产品描述
+POST   /api/v1/ai/translate               # 翻译
+POST   /api/v1/ai/seo/optimize            # SEO优化
+POST   /api/v1/ai/images/generate         # 生成图片
+```
+
+## 数据库实体
+
+### Tenant (租户)
+- id, name, domain, subdomain, theme_id, settings, status
+
+### Theme (主题)
+- id, name, display_name, config (colors, fonts, layout)
+
+### Content (内容) - 多租户
+- id, tenant_id, key, value, language, section
+
+### Product (产品) - 多租户
+- id, tenant_id, name, description, price, images, category_id, status
+
+### Page (页面) - 多租户
+- id, tenant_id, title, slug, content, blocks, seo, is_homepage
+
+### Media (媒体) - 多租户
+- id, tenant_id, filename, url, type, size
+
+## 开发计划
+
+- [x] 项目初始化
+- [x] 数据库实体定义
+- [x] 多租户架构
+- [x] 租户管理 API
+- [x] 主题管理 API
+- [x] 内容管理 API
+- [x] 产品管理 API
+- [x] 页面管理 API
+- [x] 媒体管理 API
+- [x] AI 接口
+- [ ] MinIO 文件存储集成
+- [ ] 真实 AI API 集成
+- [ ] 单元测试
+- [ ] 部署脚本
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+MIT
