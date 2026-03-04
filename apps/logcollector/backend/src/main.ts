@@ -19,8 +19,6 @@ async function bootstrap() {
     }),
   );
 
-  app.setGlobalPrefix('api');
-
   const config = new DocumentBuilder()
     .setTitle('LogCollector API')
     .setDescription('集中式日志收集与分析平台 API')
