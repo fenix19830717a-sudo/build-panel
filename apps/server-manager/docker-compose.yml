@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  server-manager:
+    build: .
+    container_name: server-manager
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - LOG_LEVEL=info
+    volumes:
+      - /:/host:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    privileged: true
+    networks:
+      - server-manager-network
+
+networks:
+  server-manager-network:
+    driver: bridge
