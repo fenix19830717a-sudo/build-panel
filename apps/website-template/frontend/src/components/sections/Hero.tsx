@@ -1,6 +1,5 @@
-import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles, Shield, Zap, Heart } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
 
 export default function Hero() {

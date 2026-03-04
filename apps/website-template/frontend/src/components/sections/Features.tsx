@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { Zap, Shield, Heart, Clock, Star, Globe } from 'lucide-react';
+import { Zap, Shield, Heart, Clock } from 'lucide-react';
 
 const features = [
   {

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import type { ThemeConfig, SiteConfig } from '../types';
 
 // Default theme configuration
@@ -67,6 +67,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     },
   });
   const [isLoading, setIsLoading] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Award, Users, Target, Globe } from 'lucide-react';
 import Layout from '../components/Layout';
@@ -53,7 +53,7 @@ const values = [
 
 export default function AboutPage() {
   const { siteConfig } = useTheme();
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (

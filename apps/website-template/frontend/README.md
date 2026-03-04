@@ -1,73 +1,139 @@
-# React + TypeScript + Vite
+# WebsiteTemplate Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive, and themeable website template built with React + Vite + TypeScript + Tailwind CSS.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Core Technologies
+- **React 19** - Latest React with improved performance
+- **Vite** - Lightning fast development and optimized builds
+- **TypeScript** - Type-safe development
+- **Tailwind CSS v4** - Modern utility-first CSS
+- **Framer Motion** - Smooth animations and transitions
+- **React Router** - Client-side routing
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
+### Theme System ⭐
+Dynamic theme configuration loaded from API:
+```typescript
+// Theme is fetched from /api/v1/theme/config
+const theme = {
+  colors: {
+    primary: '#3b82f6',
+    secondary: '#64748b',
+    background: '#ffffff',
+    foreground: '#0f172a',
+    // ...
   },
-])
+  fonts: {
+    heading: 'Inter, sans-serif',
+    body: 'Inter, sans-serif',
+  }
+}
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Built-in Themes
+1. **Default Theme** - Clean, modern blue theme
+2. **Elegant Theme** - Dark luxury theme with gold accents (perfect for jewelry)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 📁 Project Structure
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+src/
+├── components/
+│   ├── Header/          # Navigation header
+│   ├── Footer/          # Site footer
+│   ├── Layout/          # Main layout wrapper
+│   └── sections/        # Home page sections
+│       ├── Hero.tsx
+│       ├── Features.tsx
+│       ├── Products.tsx
+│       ├── About.tsx
+│       ├── News.tsx
+│       └── CTA.tsx
+├── pages/
+│   ├── Home.tsx
+│   ├── About.tsx
+│   ├── Products.tsx
+│   ├── News.tsx
+│   └── Contact.tsx
+├── contexts/
+│   └── ThemeContext.tsx # Theme management
+├── types/
+│   └── index.ts         # TypeScript types
+├── App.tsx
+├── main.tsx
+└── index.css
+```
+
+## 🎨 Pages
+
+### Home
+- Hero section with animated stats
+- Features showcase
+- Product highlights
+- Company overview
+- Latest news
+- Call-to-action
+
+### About
+- Company values
+- Timeline/Journey
+- Team members
+
+### Products
+- Grid/List view toggle
+- Category filtering
+- Search functionality
+- Product cards
+
+### News
+- Featured article
+- Category filtering
+- Article grid
+
+### Contact
+- Contact form
+- Contact information
+- Map placeholder
+
+## 🛠️ Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+## 🔌 API Integration
+
+The template expects the following API endpoints:
+
+- `GET /api/v1/theme/config` - Theme configuration
+- `GET /api/v1/site/config` - Site information (name, contact, social)
+
+If APIs are unavailable, the template falls back to default configuration.
+
+## 📱 Responsive Design
+
+- Mobile-first approach
+- Breakpoints: sm (640px), md (768px), lg (1024px), xl (1280px)
+- Optimized for all screen sizes
+
+## 🎯 Performance
+
+- Lazy loading support ready
+- Optimized bundle size
+- Smooth scroll animations
+- Hardware-accelerated transitions
+
+## 📝 License
+
+MIT License

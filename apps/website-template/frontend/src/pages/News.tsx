@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, User, Search, Tag, ArrowRight } from 'lucide-react';
+import { Calendar, Search, Tag } from 'lucide-react';
 import Layout from '../components/Layout';
 import type { NewsItem } from '../types';
 

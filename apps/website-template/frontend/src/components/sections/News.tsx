@@ -1,6 +1,6 @@
-import React from 'react';
+import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Calendar, User, ArrowRight } from 'lucide-react';
+import { Calendar, ArrowRight } from 'lucide-react';
 import type { NewsItem } from '../../types';
 
 const newsItems: NewsItem[] = [
@@ -46,7 +46,7 @@ function formatDate(dateString: string) {
 }
 
 export default function News() {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (

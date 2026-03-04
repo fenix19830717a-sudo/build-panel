@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Grid, List, Filter, ShoppingCart, Search } from 'lucide-react';
 import Layout from '../components/Layout';
