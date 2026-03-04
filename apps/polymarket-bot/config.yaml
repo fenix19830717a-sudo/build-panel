@@ -1,0 +1,67 @@
+# Polymarket Trading Bot Configuration
+
+# API Configuration
+api:
+  base_url: "https://api.polymarket.com"
+  ws_url: "wss://ws.polymarket.com"
+  api_key: ""  # Your Polymarket API Key
+  api_secret: ""  # Your Polymarket API Secret
+  timeout: 30
+  max_retries: 3
+
+# Wallet Configuration
+wallet:
+  private_key_encrypted: ""  # Will be encrypted using Fernet
+  encryption_key_path: "./.keys/encryption.key"
+  usdc_contract: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"  # Polygon USDC
+  rpc_url: "https://polygon-rpc.com"
+
+# Trading Configuration
+trading:
+  dry_run: true  # Set to false for real trading
+  max_position_size: 1000.0  # Maximum position size in USDC
+  max_daily_loss: 500.0  # Maximum daily loss limit
+  default_slippage: 0.01  # 1% default slippage
+
+# Strategy Configuration
+strategies:
+  trend_following:
+    enabled: true
+    rsi_period: 14
+    rsi_overbought: 70
+    rsi_oversold: 30
+    macd_fast: 12
+    macd_slow: 26
+    macd_signal: 9
+    min_confidence: 0.6
+  
+  arbitrage:
+    enabled: true
+    min_spread: 0.02  # Minimum 2% spread
+    max_hold_time: 300  # Maximum hold time in seconds
+
+# Risk Management
+risk:
+  stop_loss_pct: 0.05  # 5% stop loss
+  take_profit_pct: 0.10  # 10% take profit
+  max_positions: 10  # Maximum concurrent positions
+  max_margin_usage: 0.8  # Maximum 80% margin usage
+
+# Web Server
+web:
+  host: "0.0.0.0"
+  port: 8000
+  cors_origins: ["http://localhost:3000"]
+  auth_token: ""  # JWT secret for API auth
+
+# Logging
+logging:
+  level: "INFO"
+  file: "logs/polymarket_bot.log"
+  max_size: "100MB"
+  retention: "30 days"
+
+# Monitoring
+monitoring:
+  prometheus_enabled: true
+  metrics_port: 9090
