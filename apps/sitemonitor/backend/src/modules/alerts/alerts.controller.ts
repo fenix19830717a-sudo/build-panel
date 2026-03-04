@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Delete,
   Param,
   Query,
   ParseIntPipe,
@@ -89,6 +90,3 @@ export class AlertsController {
     return this.alertsService.getStats(hours);
   }
 }
-
-// 解决装饰器冲突
-declare const Delete: MethodDecorator & { (path?: string | string[]): MethodDecorator };

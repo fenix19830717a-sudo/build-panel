@@ -87,8 +87,8 @@ export class SchedulerService {
       });
 
       for (const monitor of monitors) {
-        // 更新可用率统计
-        await this.monitorsService.update(monitor.id, {});
+        // 触发更新（service会重新计算统计）
+        await this.monitorsService.update(monitor.id, { isActive: true });
       }
 
       this.logger.debug('Statistics updated');
