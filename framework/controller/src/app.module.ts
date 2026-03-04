@@ -8,6 +8,9 @@ import { ServersModule } from './servers/servers.module';
 import { ApiKeysModule } from './api-keys/api-keys.module';
 import { AppsModule } from './apps/apps.module';
 import { TasksModule } from './tasks/tasks.module';
+import { EventsModule } from './events/events.module';
+import { AgentModule } from './agent/agent.module';
+import { AuditModule } from './audit/audit.module';
 import { DatabaseConfig } from './config/database.config';
 
 @Module({
@@ -31,6 +34,9 @@ import { DatabaseConfig } from './config/database.config';
     ApiKeysModule,
     AppsModule,
     TasksModule,
+    EventsModule,
+    AgentModule,
+    AuditModule,
   ],
 })
 export class AppModule {}

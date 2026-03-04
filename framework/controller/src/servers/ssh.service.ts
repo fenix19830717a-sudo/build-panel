@@ -11,7 +11,7 @@ interface SshConnectionOptions {
 
 @Injectable()
 export class SshService {
-  async testConnection(options: SshConnectionOptions): Promise<{ success: boolean; message: string }&gt; {
+  async testConnection(options: SshConnectionOptions): Promise<{ success: boolean; message: string }> {
     return new Promise((resolve, reject) => {
       const conn = new Client();
       
@@ -53,7 +53,7 @@ export class SshService {
   async executeCommand(
     options: SshConnectionOptions,
     command: string,
-  ): Promise<{ success: boolean; output: string; error?: string }&gt; {
+  ): Promise<{ success: boolean; output: string; error?: string }> {
     return new Promise((resolve) => {
       const conn = new Client();
       

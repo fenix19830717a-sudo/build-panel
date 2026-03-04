@@ -1,0 +1,114 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: buildai-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: buildai
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ../docs/database-schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - buildai-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache & Queue
+  redis:
+    image: redis:7-alpine
+    container_name: buildai-redis
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - buildai-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Controller API
+  controller:
+    build:
+      context: ./controller
+      dockerfile: Dockerfile
+    container_name: buildai-controller
+    environment:
+      NODE_ENV: production
+      PORT: 8080
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_DATABASE: buildai
+      JWT_SECRET: ${JWT_SECRET:-change-me-in-production}
+      JWT_EXPIRES_IN: 7d
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    ports:
+      - "8080:8080"
+    networks:
+      - buildai-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped
+
+  # Web UI
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: buildai-web
+    environment:
+      VITE_API_URL: http://localhost:8080/api/v1
+    ports:
+      - "3000:80"
+    networks:
+      - buildai-network
+    depends_on:
+      - controller
+    restart: unless-stopped
+
+  # Agent (optional, for local testing)
+  # agent:
+  #   build:
+  #     context: ./agent
+  #     dockerfile: Dockerfile
+  #   container_name: buildai-agent
+  #   environment:
+  #     AGENT_TOKEN: ${AGENT_TOKEN}
+  #     CONTROLLER_URL: ws://controller:8080/ws
+  #     NODE_ID: local-agent
+  #     PORT: 8081
+  #   ports:
+  #     - "8081:8081"
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   networks:
+  #     - buildai-network
+  #   depends_on:
+  #     - controller
+
+networks:
+  buildai-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:

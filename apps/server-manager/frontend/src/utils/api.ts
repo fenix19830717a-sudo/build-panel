@@ -2,7 +2,7 @@
  * API 客户端
  */
 import axios, { AxiosError } from 'axios';
-import { ApiResponse } from '../types';
+import type { ApiResponse } from '../types';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
@@ -36,7 +36,7 @@ export const systemApi = {
 export const fileApi = {
   list: (path: string) => apiClient.get<ApiResponse>('/files/list', { params: { path } }),
   getContent: (path: string) => apiClient.get<ApiResponse>('/files/content', { params: { path } }),
-  saveContent: (path: string, content: string) =
+  saveContent: (path: string, content: string) =>
     apiClient.post<ApiResponse>('/files/content', { path, content }),
   mkdir: (path: string) => apiClient.post<ApiResponse>('/files/mkdir', { path }),
   delete: (path: string) => apiClient.delete<ApiResponse>('/files/delete', { params: { path } }),
@@ -46,7 +46,7 @@ export const fileApi = {
 // 进程管理 API
 export const processApi = {
   list: () => apiClient.get<ApiResponse>('/processes/list'),
-  kill: (pid: number, signal?: string) =
+  kill: (pid: number, signal?: string) =>
     apiClient.post<ApiResponse>('/processes/kill', { pid, signal }),
   get: (pid: number) => apiClient.get<ApiResponse>(`/processes/${pid}`)
 };
@@ -60,7 +60,7 @@ export const serviceApi = {
   restart: (name: string) => apiClient.post<ApiResponse>(`/services/${name}/restart`),
   enable: (name: string) => apiClient.post<ApiResponse>(`/services/${name}/enable`),
   disable: (name: string) => apiClient.post<ApiResponse>(`/services/${name}/disable`),
-  logs: (name: string, lines?: number) =
+  logs: (name: string, lines?: number) =>
     apiClient.get<ApiResponse>(`/services/${name}/logs`, { params: { lines } })
 };
 

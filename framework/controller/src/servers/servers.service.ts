@@ -61,7 +61,7 @@ export class ServersService {
     id: string,
     userId: string,
     sshTestDto: SshTestDto,
-  ): Promise<{ success: boolean; message: string }&gt; {
+  ): Promise<{ success: boolean; message: string }> {
     const server = await this.findOne(id, userId);
     
     try {

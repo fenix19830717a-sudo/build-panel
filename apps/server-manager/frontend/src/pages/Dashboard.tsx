@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Row, Col, Statistic, Progress, Table, Tag, Spin, Alert } from 'antd';
+import { Card, Row, Col, Statistic, Progress, Table, Spin, Alert } from 'antd';
 import {
   DesktopOutlined,
   CloudOutlined,
   DatabaseOutlined,
-  SwapOutlined,
-  WifiOutlined
+  SwapOutlined
 } from '@ant-design/icons';
 import { systemApi } from '../utils/api';
-import { SystemInfo, DiskInfo, NetworkInfo } from '../types';
+import type { SystemInfo, DiskInfo, NetworkInfo } from '../types';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const Dashboard: React.FC = () => {
@@ -19,7 +18,7 @@ const Dashboard: React.FC = () => {
 
   const fetchSystemInfo = async () => {
     try {
-      const response = await systemApi.getInfo();
+      const response = await systemApi.getInfo() as any;
       if (response.code === 0) {
         setSystemInfo(response.data);
         setCpuHistory(prev => {
@@ -108,6 +107,7 @@ const Dashboard: React.FC = () => {
             </div>
           </Card>
         </Col>
+        
         <Col xs={24} sm={12} lg={6}>
           <Card>
             <Statistic

@@ -30,7 +30,7 @@ export class ApiKeysService {
     return apiKey;
   }
 
-  async create(createApiKeyDto: CreateApiKeyDto, userId: string): Promise<{ apiKey: ApiKey; plainKey: string }&gt; {
+  async create(createApiKeyDto: CreateApiKeyDto, userId: string): Promise<{ apiKey: ApiKey; plainKey: string }> {
     const plainKey = this.generateApiKey();
     const keyHash = this.hashApiKey(plainKey);
 
