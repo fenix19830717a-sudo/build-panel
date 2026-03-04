@@ -1,35 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { ConfigProvider } from 'antd';
+import zhCN from 'antd/locale/zh_CN';
+import { AdminLayout } from './layouts/AdminLayout';
+import { DashboardPage } from './pages/DashboardPage';
+import { ArticlesPage } from './pages/ArticlesPage';
+import { CategoriesPage } from './pages/CategoriesPage';
+import { TagsPage } from './pages/TagsPage';
+import { MediaPage } from './pages/MediaPage';
+import { AiPage } from './pages/AiPage';
+import { SettingsPage } from './pages/SettingsPage';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <ConfigProvider locale={zhCN}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<DashboardPage />} />
+            <Route path="articles" element={<ArticlesPage />} />
+            <Route path="categories" element={<CategoriesPage />} />
+            <Route path="tags" element={<TagsPage />} />
+            <Route path="media" element={<MediaPage />} />
+            <Route path="ai" element={<AiPage />} />
+            <Route path="settings" element={<SettingsPage />} />
+          </Route>
+          <Route path="*" element={<Navigate to="/admin" />} />
+        </Routes>
+      </BrowserRouter>
+    </ConfigProvider>
+  );
 }
 
-export default App
+export default App;
