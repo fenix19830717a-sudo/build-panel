@@ -5,6 +5,7 @@ import { BullModule } from '@nestjs/bull';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
+import { AppController } from './app.controller';
 import { DatabaseModule } from './database/database.module';
 import { BackupModule } from './backup/backup.module';
 import { StorageModule } from './storage/storage.module';
@@ -51,8 +52,8 @@ import { StorageConfig } from './common/entities/storage-config.entity';
       },
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'uploads'),
-      serveRoot: '/uploads',
+      rootPath: join(__dirname, '..', '..', 'frontend', 'dist'),
+      serveRoot: '/',
     }),
     DatabaseModule,
     BackupModule,
@@ -61,5 +62,6 @@ import { StorageConfig } from './common/entities/storage-config.entity';
     MonitorModule,
     SchedulerModule,
   ],
+  controllers: [AppController],
 })
 export class AppModule {}

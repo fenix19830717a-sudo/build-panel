@@ -1,0 +1,36 @@
+/apps/dbbackup/backend/node_modules
+/apps/dbbackup/frontend/node_modules
+/apps/dbbackup/node_modules
+
+# Build outputs
+/apps/dbbackup/backend/dist
+/apps/dbbackup/frontend/dist
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+coverage/
+.nyc_output/
+
+# Misc
+.cache/
+*.tsbuildinfo

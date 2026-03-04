@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Card, Statistic, Table, Tag, Button, Space } from 'antd'
+import { Row, Col, Card, Statistic, Table, Tag, Button, Space, Typography } from 'antd'
 import {
   DatabaseOutlined,
   CloudUploadOutlined,
@@ -9,6 +9,18 @@ import {
   ArrowDownOutlined,
 } from '@ant-design/icons'
 import { useQuery } from 'react-query'
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts'
+import { fetchDashboardStats, fetchBackupTrend, fetchRecentBackups, fetchAlerts } from '../services/api'
+
+const { Text } = Typography
 import {
   AreaChart,
   Area,
