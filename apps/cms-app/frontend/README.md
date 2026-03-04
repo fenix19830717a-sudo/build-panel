@@ -1,73 +1,56 @@
-# React + TypeScript + Vite
+# CMS App Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+基于 React + Vite + Tailwind CSS 的博客前端。
 
-Currently, two official plugins are available:
+## 功能特性
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🏠 **首页** - 精选文章、最新文章、热门标签
+- 📄 **文章列表** - 分类筛选、分页、网格/列表视图
+- 📖 **文章详情** - 富文本渲染、相关文章推荐
+- 📂 **分类页** - 层级分类浏览
+- 🏷️ **标签云** - 按标签浏览文章
+- 🔍 **搜索** - 全文搜索功能
 
-## React Compiler
+## 页面结构
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── components/      # 可复用组件
+│   ├── ArticleCard.tsx
+│   └── TagCloud.tsx
+├── layouts/         # 布局组件
+│   └── MainLayout.tsx
+├── pages/           # 页面组件
+│   ├── HomePage.tsx
+│   ├── ArticlesPage.tsx
+│   ├── ArticleDetailPage.tsx
+│   ├── CategoriesPage.tsx
+│   ├── TagsPage.tsx
+│   └── SearchPage.tsx
+├── services/        # API 服务
+│   └── api.ts
+├── types/           # TypeScript 类型
+│   └── index.ts
+└── ...
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 快速开始
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# 安装依赖
+npm install
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# 开发服务器
+npm run dev
+
+# 构建
+npm run build
+```
+
+## 环境变量
+
+创建 `.env` 文件:
+
+```env
+VITE_API_URL=http://localhost:3000/api/v1
 ```
