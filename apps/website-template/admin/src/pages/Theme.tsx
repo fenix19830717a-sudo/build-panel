@@ -1,22 +1,20 @@
 import React, { useState } from 'react';
-import {
-  Card,
-  Row,
-  Col,
-  ColorPicker,
-  Form,
-  Input,
-  Select,
-  Upload,
-  Button,
-  Tabs,
-  Radio,
-  Space,
-  Typography,
-  Divider,
-  message,
-  Slider,
-} from 'antd';
+import Card from 'antd/es/card';
+import Row from 'antd/es/row';
+import Col from 'antd/es/col';
+import ColorPicker from 'antd/es/color-picker';
+import Form from 'antd/es/form';
+import Input from 'antd/es/input';
+import Select from 'antd/es/select';
+import Upload from 'antd/es/upload';
+import Button from 'antd/es/button';
+import Tabs from 'antd/es/tabs';
+import Radio from 'antd/es/radio';
+import Space from 'antd/es/space';
+import Typography from 'antd/es/typography';
+import Divider from 'antd/es/divider';
+import message from 'antd/es/message';
+import Slider from 'antd/es/slider';
 import {
   UploadOutlined,
   EyeOutlined,
@@ -26,7 +24,7 @@ import {
   BgColorsOutlined,
   FontSizeOutlined,
 } from '@ant-design/icons';
-import type { Color } from 'antd/es/color-picker';
+// Color type from ColorPicker
 import { useThemeStore } from '../stores';
 
 const { Title, Text } = Typography;
@@ -104,7 +102,7 @@ const ThemeConfig: React.FC = () => {
   const [form] = Form.useForm();
   const [previewMode, setPreviewMode] = useState(false);
 
-  const handleColorChange = (color: Color, field: string) => {
+  const handleColorChange = (color: any, field: string) => {
     updateTheme({ [field]: color.toHexString() });
   };
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Layout, Menu, Button, Avatar, Dropdown, Badge, theme as antTheme } from 'antd';
+import { Layout, Menu, Button, Avatar, Dropdown, Badge, theme as antTheme } from 'antd/es';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,

@@ -1,73 +1,125 @@
-# React + TypeScript + Vite
+# Website Template Admin
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+WebsiteTemplate 独立站模板的管理后台系统。
 
-Currently, two official plugins are available:
+## 技术栈
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **框架**: React 18 + TypeScript
+- **构建工具**: Vite
+- **UI 组件库**: Ant Design 5 + Ant Design Pro Components
+- **状态管理**: Zustand
+- **数据获取**: TanStack Query (React Query)
+- **路由**: React Router v6
+- **图表**: Ant Design Charts
 
-## React Compiler
+## 功能特性
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 1. Dashboard (仪表盘)
+- 站点访问统计图表
+- 内容发布统计
+- 快速操作入口
+- 最近活动列表
 
-## Expanding the ESLint configuration
+### 2. Theme (主题配置) ⭐ 核心
+- 预设主题选择器 (卡片展示)
+- 颜色配置器 (实时预览)
+- Logo/Favicon 上传
+- 字体选择
+- 布局设置 (默认/侧边栏/顶部导航)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 3. Content (内容管理)
+- 首页内容编辑
+- 关于我们编辑
+- 服务介绍编辑
+- AI 一键生成内容按钮
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 4. Products (产品管理)
+- 产品列表 (表格展示)
+- 产品编辑/创建 (表单)
+- 多图上传
+- AI 生成产品描述
+- 分类管理
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### 5. Pages (页面管理)
+- 页面列表
+- 页面编辑 (标题、内容、SEO)
+- 导航菜单配置
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 6. Media (媒体库)
+- 图片网格展示
+- 上传/删除
+- AI 生成图片
+
+### 7. SEO (SEO设置)
+- 站点标题/描述
+- 关键词设置
+- Robots.txt 编辑
+- Sitemap 生成
+- AI SEO 优化按钮
+
+### 8. AI Assistant (AI助手) ⭐
+- 一键生成全站内容
+- 智能推荐
+- 批量翻译
+
+## 项目结构
+
+```
+src/
+├── api/           # API 客户端和接口定义
+├── components/    # 公共组件
+├── hooks/         # 自定义 Hooks (React Query)
+├── layouts/       # 布局组件
+├── pages/         # 页面组件
+├── stores/        # Zustand 状态管理
+├── types/         # TypeScript 类型定义
+├── utils/         # 工具函数
+├── App.tsx        # 主应用组件
+└── main.tsx       # 入口文件
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 快速开始
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 安装依赖
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
+
+### 开发模式
+
+```bash
+npm run dev
+```
+
+### 构建
+
+```bash
+npm run build
+```
+
+### 预览构建结果
+
+```bash
+npm run preview
+```
+
+## 环境变量
+
+创建 `.env.local` 文件：
+
+```env
+VITE_API_URL=http://localhost:8000/api
+```
+
+## 开发规范
+
+- 使用 TypeScript 严格模式
+- 组件使用函数式组件 + Hooks
+- 状态管理使用 Zustand
+- API 请求使用 TanStack Query
+- UI 组件优先使用 Ant Design
+
+## 许可证
+
+MIT

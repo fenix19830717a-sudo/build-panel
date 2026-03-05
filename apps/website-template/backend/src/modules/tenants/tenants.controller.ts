@@ -3,64 +3,92 @@ import {
   Get,
   Post,
   Put,
+  Delete,
   Body,
   Param,
   Query,
-  HttpStatus,
+  ParseUUIDPipe,
   HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiQuery } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { TenantsService } from './tenants.service';
-import { CreateTenantDto, UpdateTenantDto, DeployTenantDto } from './dto';
+import { CreateTenantDto, UpdateTenantDto, TenantQueryDto } from './dto/tenant.dto';
+import { Tenant, TenantStatus } from './entities/tenant.entity';
 
-@ApiTags('Admin - Tenants')
-@Controller('api/v1/admin/tenants')
+@ApiTags('Tenants')
+@Controller('tenants')
 export class TenantsController {
   constructor(private readonly tenantsService: TenantsService) {}
 
   @Post()
+  @ApiBearerAuth()
   @ApiOperation({ summary: '创建租户' })
-  @ApiResponse({ status: HttpStatus.CREATED, description: '租户创建成功' })
-  create(@Body() createTenantDto: CreateTenantDto) {
+  @ApiResponse({ status: 201, description: '租户创建成功', type: Tenant })
+  async create(@Body() createTenantDto: CreateTenantDto): Promise<Tenant> {
     return this.tenantsService.create(createTenantDto);
   }
 
   @Get()
-  @ApiOperation({ summary: '租户列表' })
-  @ApiQuery({ name: 'page', required: false, type: Number })
-  @ApiQuery({ name: 'limit', required: false, type: Number })
-  @ApiQuery({ name: 'status', required: false, type: String })
-  findAll(
-    @Query('page') page: number = 1,
-    @Query('limit') limit: number = 10,
-    @Query('status') status?: string,
-  ) {
-    return this.tenantsService.findAll({ page, limit, status });
+  @ApiBearerAuth()
+  @ApiOperation({ summary: '获取租户列表' })
+  @ApiResponse({ status: 200, description: '返回租户列表' })
+  async findAll(@Query() query: TenantQueryDto) {
+    return this.tenantsService.findAll(query);
+  }
+
+  @Get('stats')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: '获取租户统计' })
+  @ApiResponse({ status: 200, description: '返回租户统计' })
+  async getStats() {
+    return this.tenantsService.getTenantStats();
   }
 
   @Get(':id')
-  @ApiOperation({ summary: '租户详情' })
-  @ApiResponse({ status: HttpStatus.OK, description: '获取成功' })
-  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: '租户不存在' })
-  findOne(@Param('id') id: string) {
+  @ApiBearerAuth()
+  @ApiOperation({ summary: '获取租户详情' })
+  @ApiResponse({ status: 200, description: '返回租户详情', type: Tenant })
+  @ApiResponse({ status: 404, description: '租户不存在' })
+  async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<Tenant> {
     return this.tenantsService.findOne(id);
   }
 
+  @Get('by-slug/:slug')
+  @ApiOperation({ summary: '通过slug获取租户' })
+  @ApiResponse({ status: 200, description: '返回租户详情', type: Tenant })
+  async findBySlug(@Param('slug') slug: string): Promise<Tenant | null> {
+    return this.tenantsService.findBySlug(slug);
+  }
+
   @Put(':id')
+  @ApiBearerAuth()
   @ApiOperation({ summary: '更新租户' })
-  @ApiResponse({ status: HttpStatus.OK, description: '更新成功' })
-  update(@Param('id') id: string, @Body() updateTenantDto: UpdateTenantDto) {
+  @ApiResponse({ status: 200, description: '租户更新成功', type: Tenant })
+  async update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateTenantDto: UpdateTenantDto,
+  ): Promise<Tenant> {
     return this.tenantsService.update(id, updateTenantDto);
   }
 
-  @Post(':id/deploy')
-  @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: '部署租户站点' })
-  @ApiResponse({ status: HttpStatus.OK, description: '部署成功' })
-  deploy(
-    @Param('id') id: string,
-    @Body() deployDto: DeployTenantDto,
-  ) {
-    return this.tenantsService.deploy(id, deployDto);
+  @Delete(':id')
+  @ApiBearerAuth()
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: '删除租户' })
+  @ApiResponse({ status: 204, description: '租户删除成功' })
+  async remove(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
+    return this.tenantsService.remove(id);
+  }
+
+  @Put(':id/status')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: '更新租户状态' })
+  @ApiResponse({ status: 200, description: '状态更新成功', type: Tenant })
+  async updateStatus(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body('status') status: TenantStatus,
+  ): Promise<Tenant> {
+    return this.tenantsService.updateStatus(id, status);
   }
 }

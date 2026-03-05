@@ -11,7 +11,7 @@ import {
   Typography,
   Badge,
   Progress,
-} from 'antd';
+} from 'antd/es';
 import {
   EyeOutlined,
   ShoppingOutlined,
@@ -46,7 +46,7 @@ const mockStats = {
     totalMedia: 156,
     publishedPages: 10,
   },
-} };
+};
 
 const mockChartData = [
   { date: '03-01', visits: 3500, pageViews: 6800 },
