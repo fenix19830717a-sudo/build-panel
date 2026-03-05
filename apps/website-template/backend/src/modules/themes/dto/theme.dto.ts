@@ -41,7 +41,47 @@ export class CreateThemeDto {
   previewImage?: string;
 }
 
-export class UpdateThemeDto extends CreateThemeDto {}
+export class UpdateThemeDto {
+  @ApiPropertyOptional({ description: '主题名称' })
+  @IsString()
+  @IsOptional()
+  name?: string;
+
+  @ApiPropertyOptional({ description: '主题标识' })
+  @IsString()
+  @IsOptional()
+  slug?: string;
+
+  @ApiPropertyOptional({ description: '描述' })
+  @IsString()
+  @IsOptional()
+  description?: string;
+
+  @ApiPropertyOptional({ description: '状态', enum: ThemeStatus })
+  @IsEnum(ThemeStatus)
+  @IsOptional()
+  status?: ThemeStatus;
+
+  @ApiPropertyOptional({ description: '是否默认主题' })
+  @IsBoolean()
+  @IsOptional()
+  isDefault?: boolean;
+
+  @ApiPropertyOptional({ description: '主题配置' })
+  @IsObject()
+  @IsOptional()
+  config?: Record<string, any>;
+
+  @ApiPropertyOptional({ description: '自定义CSS' })
+  @IsString()
+  @IsOptional()
+  customCss?: string;
+
+  @ApiPropertyOptional({ description: '预览图' })
+  @IsString()
+  @IsOptional()
+  previewImage?: string;
+}
 
 export class ApplyThemeDto {
   @ApiProperty({ description: '主题ID' })

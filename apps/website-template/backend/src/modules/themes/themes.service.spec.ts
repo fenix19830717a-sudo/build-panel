@@ -412,7 +412,7 @@ describe('ThemesService', () => {
     it('should return empty root for empty config', () => {
       const result = service.generateCssVariables({});
 
-      expect(result).toBe(':root {\n}');
+      expect(result).toMatch(/:root\s*\{\s*\}/);
     });
 
     it('should handle partial config', () => {

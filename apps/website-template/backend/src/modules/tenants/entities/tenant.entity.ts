@@ -4,11 +4,7 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
 } from 'typeorm';
-import { Content } from '../../contents/entities/content.entity';
-import { Product } from '../../products/entities/product.entity';
-import { Page } from '../../pages/entities/page.entity';
 
 export enum TenantStatus {
   ACTIVE = 'active',
@@ -74,15 +70,6 @@ export class Tenant {
       linkedin?: string;
     };
   };
-
-  @OneToMany(() => Content, (content) => content.tenant)
-  contents: Content[];
-
-  @OneToMany(() => Product, (product) => product.tenant)
-  products: Product[];
-
-  @OneToMany(() => Page, (page) => page.tenant)
-  pages: Page[];
 
   @CreateDateColumn()
   createdAt: Date;

@@ -57,7 +57,7 @@ describe('ProductsService', () => {
         images: ['https://example.com/image.jpg'],
         category_id: 'category-123',
         tag_ids: ['tag-1', 'tag-2'],
-        status: ProductStatus.PUBLISHED,
+        status: ProductStatus.ACTIVE,
         seo: { title: 'SEO Title' },
         attributes: { color: 'red' },
       };
@@ -192,7 +192,7 @@ describe('ProductsService', () => {
     });
 
     it('should filter by status', async () => {
-      const query = { tenantId: 'tenant-123', status: ProductStatus.PUBLISHED };
+      const query = { tenantId: 'tenant-123', status: ProductStatus.ACTIVE };
 
       productRepository.findAndCount.mockResolvedValue([[], 0]);
 
@@ -202,7 +202,7 @@ describe('ProductsService', () => {
         expect.objectContaining({
           where: {
             tenant_id: 'tenant-123',
-            status: ProductStatus.PUBLISHED,
+            status: ProductStatus.ACTIVE,
           },
         }),
       );

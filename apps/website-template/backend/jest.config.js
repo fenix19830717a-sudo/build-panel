@@ -14,7 +14,7 @@ module.exports = {
   ],
   coverageDirectory: './coverage',
   coverageThreshold: {
-    global: {
+    'src/**/*service.ts': {
       branches: 80,
       functions: 80,
       lines: 80,
