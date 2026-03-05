@@ -1,0 +1,64 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+
+rule_files: []
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'buildai-controller'
+    static_configs:
+      - targets: ['controller:3000']
+    metrics_path: /metrics
+
+  - job_name: 'buildai-website-template'
+    static_configs:
+      - targets: ['wt-backend:3000']
+    metrics_path: /metrics
+
+  - job_name: 'buildai-store-app'
+    static_configs:
+      - targets: ['store-backend:3000']
+    metrics_path: /metrics
+
+  - job_name: 'buildai-cms-app'
+    static_configs:
+      - targets: ['cms-backend:3000']
+    metrics_path: /metrics
+
+  - job_name: 'buildai-chat-service'
+    static_configs:
+      - targets: ['chat-service:3000']
+    metrics_path: /metrics
+
+  - job_name: 'buildai-sitemonitor'
+    static_configs:
+      - targets: ['sitemonitor:3000']
+    metrics_path: /metrics
+
+  - job_name: 'buildai-logcollector'
+    static_configs:
+      - targets: ['logcollector:3000']
+    metrics_path: /metrics
+
+  - job_name: 'buildai-dbbackup'
+    static_configs:
+      - targets: ['dbbackup:3000']
+    metrics_path: /metrics
+
+  - job_name: 'buildai-server-manager'
+    static_configs:
+      - targets: ['server-manager:3000']
+    metrics_path: /metrics
+
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
