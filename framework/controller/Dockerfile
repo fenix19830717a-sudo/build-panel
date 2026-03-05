@@ -34,7 +34,7 @@ FROM node:20-alpine AS production
 
 WORKDIR /app
 
-RUN apk add --no-cache curl openssh-client
+RUN apk add --no-cache curl openssh-client postgresql-client redis
 
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nestjs -u 1001 -G nodejs
@@ -42,14 +42,16 @@ RUN addgroup -g 1001 -S nodejs && \
 COPY --from=builder --chown=nestjs:nodejs /app/dist ./dist
 COPY --from=builder --chown=nestjs:nodejs /app/node_modules ./node_modules
 COPY --from=builder --chown=nestjs:nodejs /app/package.json ./
+COPY --from=builder --chown=nestjs:nodejs /app/scripts ./scripts
+COPY --from=builder --chown=nestjs:nodejs /app/migrations ./migrations
 
 USER nestjs
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=30s --retries=3 \
-    CMD curl -f http://localhost:3000/health || exit 1
+    CMD curl -f http://localhost:8080/api/v1 || exit 1
 
-EXPOSE 3000
+EXPOSE 8080
 
 ENV NODE_ENV=production
 
-CMD ["node", "dist/main.js"]
+CMD ["sh", "-c", "./scripts/startup-check.sh && node dist/main.js"]

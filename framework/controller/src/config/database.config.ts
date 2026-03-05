@@ -14,6 +14,8 @@ export class DatabaseConfig implements TypeOrmOptionsFactory {
   constructor(private configService: ConfigService) {}
 
   createTypeOrmOptions(): TypeOrmModuleOptions {
+    const isDev = process.env.NODE_ENV === 'development';
+    
     return {
       type: 'postgres',
       host: this.configService.get('DB_HOST', 'localhost'),
@@ -22,8 +24,13 @@ export class DatabaseConfig implements TypeOrmOptionsFactory {
       password: this.configService.get('DB_PASSWORD', 'postgres'),
       database: this.configService.get('DB_DATABASE', 'buildai'),
       entities: [User, ApiKey, Server, App, ServerApp, Task, AuditLog],
-      synchronize: process.env.NODE_ENV === 'development',
-      logging: process.env.NODE_ENV === 'development',
+      // 生产环境使用迁移，开发环境可同步
+      synchronize: isDev,
+      logging: isDev,
+      // 迁移配置
+      migrations: [__dirname + '/../../migrations/*{.ts,.js}'],
+      migrationsRun: !isDev, // 生产环境自动运行迁移
+      migrationsTableName: 'migrations',
     };
   }
 }
