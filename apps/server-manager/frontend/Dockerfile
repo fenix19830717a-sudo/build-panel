@@ -1,4 +1,4 @@
-# BuildAI Framework - SiteMonitor
+# BuildAI Framework - ServerManager
 # Frontend Dockerfile - React + Vite
 
 # ===================

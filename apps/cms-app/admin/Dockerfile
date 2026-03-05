@@ -1,5 +1,5 @@
-# BuildAI Framework - SiteMonitor
-# Frontend Dockerfile - React + Vite
+# BuildAI Framework - CMSApp
+# Admin Dockerfile - React + Vite
 
 # ===================
 # 构建阶段

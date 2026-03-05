@@ -1,0 +1,71 @@
+# BuildAI Framework - ChatService
+# Docker Compose 单应用配置
+
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: chat-backend
+    restart: unless-stopped
+    ports:
+      - "3004:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+    networks:
+      - chat-network
+    depends_on:
+      - redis
+
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+    container_name: chat-admin
+    restart: unless-stopped
+    ports:
+      - "8102:80"
+    networks:
+      - chat-network
+    depends_on:
+      - backend
+
+  widget:
+    build:
+      context: ./widget
+      dockerfile: Dockerfile
+    container_name: chat-widget
+    restart: unless-stopped
+    ports:
+      - "8103:80"
+    networks:
+      - chat-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: chat-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    networks:
+      - chat-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+networks:
+  chat-network:
+    driver: bridge
+
+volumes:
+  redis-data:

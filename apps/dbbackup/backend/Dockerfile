@@ -1,4 +1,4 @@
-# BuildAI Framework - SiteMonitor
+# BuildAI Framework - DBBackup
 # Backend Dockerfile - NestJS
 
 # ===================
@@ -8,7 +8,7 @@ FROM node:20-alpine AS deps
 
 WORKDIR /app
 
-RUN apk add --no-cache python3 make g++
+RUN apk add --no-cache python3 make g++ postgresql-client
 
 COPY package*.json ./
 RUN npm ci
@@ -34,7 +34,8 @@ FROM node:20-alpine AS production
 
 WORKDIR /app
 
-RUN apk add --no-cache curl
+# 安装 PostgreSQL 客户端用于备份
+RUN apk add --no-cache postgresql-client curl
 
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nestjs -u 1001 -G nodejs
@@ -45,7 +46,7 @@ COPY --from=builder --chown=nestjs:nodejs /app/package.json ./
 
 USER nestjs
 
-HEALTHCHECK --interval=30s --timeout-3s --start-period=30s --retries=3 \
+HEALTHCHECK --interval=30s --timeout=3s --start-period=30s --retries=3 \
     CMD curl -f http://localhost:3000/health || exit 1
 
 EXPOSE 3000

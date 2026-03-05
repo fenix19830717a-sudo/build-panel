@@ -1,4 +1,4 @@
-# BuildAI Framework - SiteMonitor
+# BuildAI Framework - StoreApp
 # Backend Dockerfile - NestJS
 
 # ===================
@@ -45,7 +45,7 @@ COPY --from=builder --chown=nestjs:nodejs /app/package.json ./
 
 USER nestjs
 
-HEALTHCHECK --interval=30s --timeout-3s --start-period=30s --retries=3 \
+HEALTHCHECK --interval=30s --timeout=3s --start-period=30s --retries=3 \
     CMD curl -f http://localhost:3000/health || exit 1
 
 EXPOSE 3000

@@ -1,4 +1,4 @@
-# BuildAI Framework - CMSApp
+# BuildAI Framework - StoreApp
 # Docker Compose 单应用配置
 
 version: '3.8'
@@ -8,12 +8,12 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: cms-frontend
+    container_name: store-frontend
     restart: unless-stopped
     ports:
-      - "8100:80"
+      - "8090:80"
     networks:
-      - cms-network
+      - store-network
     depends_on:
       - backend
 
@@ -21,12 +21,12 @@ services:
     build:
       context: ./admin
       dockerfile: Dockerfile
-    container_name: cms-admin
+    container_name: store-admin
     restart: unless-stopped
     ports:
-      - "8101:80"
+      - "8091:80"
     networks:
-      - cms-network
+      - store-network
     depends_on:
       - backend
 
@@ -34,22 +34,21 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: cms-backend
+    container_name: store-backend
     restart: unless-stopped
     ports:
-      - "3003:3000"
+      - "3002:3000"
     environment:
       - NODE_ENV=production
       - PORT=3000
       - DB_HOST=postgres
       - DB_PORT=5432
-      - DB_USERNAME=${DB_USERNAME:-cms_buildai}
+      - DB_USERNAME=${DB_USERNAME:-store_buildai}
       - DB_PASSWORD=${DB_PASSWORD:-password}
-      - DB_DATABASE=${DB_DATABASE:-cmsapp}
-      - JWT_SECRET=${JWT_SECRET:-cms_jwt_secret}
-      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - DB_DATABASE=${DB_DATABASE:-storeapp}
+      - JWT_SECRET=${JWT_SECRET:-store_jwt_secret}
     networks:
-      - cms-network
+      - store-network
     depends_on:
       postgres:
         condition: service_healthy
@@ -58,24 +57,24 @@ services:
 
   postgres:
     image: postgres:16-alpine
-    container_name: cms-postgres
+    container_name: store-postgres
     restart: unless-stopped
     environment:
-      - POSTGRES_USER=${DB_USERNAME:-cms_buildai}
+      - POSTGRES_USER=${DB_USERNAME:-store_buildai}
       - POSTGRES_PASSWORD=${DB_PASSWORD:-password}
-      - POSTGRES_DB=${DB_DATABASE:-cmsapp}
+      - POSTGRES_DB=${DB_DATABASE:-storeapp}
     volumes:
       - postgres-data:/var/lib/postgresql/data
     networks:
-      - cms-network
+      - store-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-cms_buildai} -d ${DB_DATABASE:-cmsapp}"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-store_buildai} -d ${DB_DATABASE:-storeapp}"]
       interval: 10s
       timeout: 5s
       retries: 5
 
 networks:
-  cms-network:
+  store-network:
     driver: bridge
 
 volumes:
