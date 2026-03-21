@@ -1,0 +1,15 @@
+{
+  "id": "trading-bot",
+  "name": "Trading Bot Module",
+  "version": "1.0.0",
+  "entry": "index.js",
+  "routes": [
+    { "path": "/status", "method": "GET", "handler": "getStatus" },
+    { "path": "/execute", "method": "POST", "handler": "executeTrade" },
+    { "path": "/config", "method": "GET", "handler": "getConfig" },
+    { "path": "/config", "method": "POST", "handler": "updateConfig" }
+  ],
+  "dependencies": [],
+  "permissions": ["network", "database"],
+  "enabled": true
+}

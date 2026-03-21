@@ -1,0 +1,14 @@
+{
+  "id": "data-scraper",
+  "name": "Data Scraper Module",
+  "version": "1.0.0",
+  "entry": "index.js",
+  "routes": [
+    { "path": "/scrape", "method": "POST", "handler": "scrape" },
+    { "path": "/tasks", "method": "GET", "handler": "getTasks" },
+    { "path": "/tasks/:id", "method": "GET", "handler": "getTaskStatus" }
+  ],
+  "dependencies": [],
+  "permissions": ["network"],
+  "enabled": true
+}
